@@ -1,17 +1,14 @@
 package br.com.dev.api.resources;
 
-import br.com.dev.api.domain.User;
 import br.com.dev.api.domain.dto.UserDTO;
 import br.com.dev.api.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -36,5 +33,12 @@ public class UserResource {
                 .body(userService.findAll().stream()
                         .map(x -> mapper.map(x, UserDTO.class))
                         .toList());
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}").buildAndExpand(userService.create(userDTO).getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
