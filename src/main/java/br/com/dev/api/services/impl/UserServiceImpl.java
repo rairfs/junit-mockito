@@ -4,8 +4,8 @@ import br.com.dev.api.domain.User;
 import br.com.dev.api.domain.dto.UserDTO;
 import br.com.dev.api.repositories.UserRepository;
 import br.com.dev.api.services.UserService;
+import br.com.dev.api.services.exceptions.DataIntegrityViolationException;
 import br.com.dev.api.services.exceptions.ObjectNotFoundException;
-import br.com.dev.api.services.exceptions.SQLConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,10 +38,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User create(UserDTO userDTO) {
-        Optional<User> obj = usuarioRepository.findByEmail(userDTO.getEmail());
-        obj.ifPresent(user -> {
-            throw new SQLConstraintViolationException("Email " + user.getEmail() + " já existente!");
-        });
+        checkEmailIfPresent(userDTO);
         return usuarioRepository.save(mapper.map(userDTO, User.class));
+    }
+
+    private void checkEmailIfPresent(UserDTO dto) {
+        Optional<User> obj = usuarioRepository.findByEmail(dto.getEmail());
+        obj.ifPresent(user -> {
+            throw new DataIntegrityViolationException("Email " + user.getEmail() + " já cadastrado no sistema!");
+        });
     }
 }
