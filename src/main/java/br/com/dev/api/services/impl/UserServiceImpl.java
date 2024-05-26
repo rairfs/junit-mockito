@@ -6,6 +6,7 @@ import br.com.dev.api.services.UserService;
 import br.com.dev.api.services.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,10 @@ public class UserServiceImpl implements UserService {
     public User findById(Integer id) {
         Optional<User> obj = usuarioRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado!"));
+    }
+
+    @Override
+    public List<User> findAll() {
+        return usuarioRepository.findAll();
     }
 }
