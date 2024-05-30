@@ -3,6 +3,7 @@ package br.com.dev.api.resources;
 import br.com.dev.api.domain.dto.UserDTO;
 import br.com.dev.api.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -15,13 +16,12 @@ import java.util.List;
 public class UserResource {
 
     public static final String ID = "/{id}";
-    private final ModelMapper mapper;
-    private final UserService userService;
 
-    public UserResource(ModelMapper mapper, UserService userService) {
-        this.mapper = mapper;
-        this.userService = userService;
-    }
+    @Autowired
+    private ModelMapper mapper;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
