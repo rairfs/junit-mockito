@@ -25,9 +25,6 @@ public class UserResource {
         this.userService = userService;
     }
 
-    public UserResource() {
-    }
-
     @GetMapping(value = ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(mapper.map(userService.findById(id), UserDTO.class));
