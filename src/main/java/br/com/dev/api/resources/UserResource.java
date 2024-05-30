@@ -3,7 +3,6 @@ package br.com.dev.api.resources;
 import br.com.dev.api.domain.dto.UserDTO;
 import br.com.dev.api.services.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
