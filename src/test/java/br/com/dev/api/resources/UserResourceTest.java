@@ -30,8 +30,6 @@ class UserResourceTest {
     public static final String NAME = "Rai";
     public static final String EMAIL = "rai@email.com";
     public static final String PASSWORD = "123";
-    public static final String OBJETO_NAO_ENCONTRADO = "Usuário não encontrado!";
-    public static final int INDEX = 0;
 
     @InjectMocks
     private UserResource userResource;
